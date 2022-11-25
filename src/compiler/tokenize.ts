@@ -85,12 +85,7 @@ function tokenize(html_str: string) {
                 break;
             // 文本状态
             case State.text:
-                if (isAlpha(char)) {
-                    // 把文本缓冲进 buffer 数组里面
-                    buffer.push(char);
-                    // 消费字符
-                    html_str = html_str.slice(1);
-                } else if (char === "<") {
+                if (char === "<") {
                     // 切换为标签开始状态
                     currentState = State.tagStart;
                     // 创建文本 token
@@ -100,6 +95,12 @@ function tokenize(html_str: string) {
                     });
                     // 清空 buffer 里面的字符
                     buffer.length = 0;
+                    // 消费字符
+                    html_str = html_str.slice(1);
+                } else {
+                    // 取消是否是字母的判断条件，防止遇到其他符号循环卡住在文本状态 （见以前的 git 记录）
+                    // 把文本缓冲进 buffer 数组里面
+                    buffer.push(char);
                     // 消费字符
                     html_str = html_str.slice(1);
                 }
