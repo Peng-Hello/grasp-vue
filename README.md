@@ -2,6 +2,8 @@
 
 ![MIT License](https://img.shields.io/github/license/Peng-Hello/grasp-vue)
 
+[English version](./docs/en.md)
+
 A toy for learning vue ！
 如你所见的仓库名称一样,该仓库是学习 Vue 时的玩具。
 ## 快速开始
