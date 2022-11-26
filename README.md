@@ -23,3 +23,4 @@ pnpm run test
 ## 更新日志
 - 编译器模块
   - tokenize 函数实现
+  - parse 函数实现

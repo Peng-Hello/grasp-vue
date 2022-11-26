@@ -23,3 +23,4 @@ pnpm run test
 ## Update Log
 - Compiler module
   - tokenize function implementation
+  - parse function implementation
