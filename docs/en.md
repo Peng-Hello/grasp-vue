@@ -16,6 +16,8 @@ cd grasp-vue
 pnpm install
 # Running the unit tests
 pnpm run test
+# Development
+pnpm run dev
 # Build
 pnpm run build
 ```
