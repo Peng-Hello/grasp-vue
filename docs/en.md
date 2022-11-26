@@ -16,6 +16,8 @@ cd grasp-vue
 pnpm install
 # Running the unit tests
 pnpm run test
+# Build
+pnpm run build
 ```
 ## Feature
 - Detailed notes in Chinese

@@ -16,6 +16,8 @@ cd grasp-vue
 pnpm install
 # 运行单元测试
 pnpm run test
+# 构建
+pnpm run build
 ```
 ## 特点
 - 有详细的中文注释
