@@ -17,6 +17,9 @@ pnpm install
 # 运行单元测试
 pnpm run test
 ```
+## 特点
+- 有详细的中文注释
+- 每个模块都有与之相对应单元测试
 ## 技术栈
 - TypeScript
 - vitest (一个强大的单元测试框架)

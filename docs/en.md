@@ -17,6 +17,9 @@ pnpm install
 # Running the unit tests
 pnpm run test
 ```
+## Feature
+- Detailed notes in Chinese
+- Each module has a unit test associated with it
 ## Technology Stack
 - TypeScript
 - vitest (A powerful unit testing framework)
