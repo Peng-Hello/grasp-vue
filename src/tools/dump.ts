@@ -2,7 +2,7 @@ import { ParseItem } from "../compiler/type/parse.type";
 // 深度遍历模板 AST 并且输出节点信息
 function dump(node: ParseItem, indent: number = 0) {
     const desc =
-        node.type === "root"
+        node.type === "Root"
             ? ""
             : node.type === "Element"
             ? node.tag
