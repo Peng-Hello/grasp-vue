@@ -7,7 +7,7 @@ function parse(html_str: string): ParseItem {
     const tokenList = tokenize(html_str);
     // 定义 root 元素
     const root: ParseItem = {
-        type: "Root",
+        type: "root",
         children: [],
     };
     // 元素栈 (用于维护 token List 里面的父子关系)
