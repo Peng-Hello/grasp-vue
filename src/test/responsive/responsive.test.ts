@@ -1,9 +1,26 @@
 import { describe, it, expect } from "vitest";
-import { obj, global } from "../../responsive/responsive";
+import { effect, ref } from "../../responsive/responsive";
+
+// 测试的对象
+const data: {
+    test: string;
+} = {
+    test: "Hello World",
+};
+
+// 全局变量
+let global = "This is global variable";
 
 describe("响应性系统", () => {
-    it("简单的响应性测试", () => {
-        obj.test = "Good!";
-        expect(global, "Good!");
+    it("可以自行册副作用函数", () => {
+        const refData = ref(data);
+
+        effect(() => {
+            global = refData.test;
+        });
+
+        refData.test = "Good!";
+
+        expect(global).toBe("Good!");
     });
 });
