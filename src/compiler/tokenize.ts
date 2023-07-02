@@ -1,5 +1,5 @@
 import isAlpha from "../tools/isAlpha"; // 辅助函数 判断字符是否为字母
-import { State, TokenItem } from "./type/tokenize.type"; // 引入 tokenize 的类型
+import { State, TokenItem } from "../type/tokenize.type"; // 引入 tokenize 的类型
 
 // 标志化函数
 function tokenize(html_str: string) {

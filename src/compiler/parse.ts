@@ -1,5 +1,5 @@
 import tokenize from "./tokenize"; // 引入 tokenize 函数
-import { ParseItem } from "./type/parse.type"; // 导入 Parse item 的类型
+import { ParseItem } from "../type/parse.type"; // 导入 Parse item 的类型
 
 // 解析函数
 function parse(html_str: string): ParseItem {
