@@ -12,6 +12,11 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "vite": "^4.3.9",
         "vitest": "^0.25.2"
+    },
+    "dependencies": {
+        "ts-node": "^10.9.1",
+        "typescript": "^5.1.6"
     }
 }
