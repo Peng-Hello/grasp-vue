@@ -5,13 +5,27 @@ import type { Target, Key } from "../type/responsive.type";
 // 收集副作用的桶
 const bucket: WeakMap<Object, any> = new WeakMap();
 
+// 清除依赖关系函数
+function cleanUp(effectFun: any) {
+    for (let i = 0; i < effectFun.deps.length; i++) {
+        const deps = effectFun.deps[i];
+        deps.delete(effectFun);
+    }
+    effectFun.deps.length = 0;
+}
+
 // 需要注册的副作用函数
 let activateEffect: any;
 
 // 副作用函数注册机
 export function effect(fn: Function) {
-    activateEffect = fn; // 注册
-    fn(); // 执行，触发读取
+    const effectFn: any = () => {
+        cleanUp(effectFn);
+        activateEffect = effectFn;
+        fn();
+    };
+    effectFn.deps = [];
+    effectFn();
 }
 
 // track 函数追踪变化
@@ -30,6 +44,8 @@ function track(target: Target, key: Key) {
         depMap.set(key, (depSet = new Set()));
     }
     depSet.add(activateEffect);
+    // 把副作用函数与相关的依赖集合关联起来
+    activateEffect.deps.push(depSet);
 }
 
 // trigger 副作用函数触发
@@ -37,7 +53,9 @@ function trigger(target: Target, key: Key) {
     const depMap = bucket.get(target);
     if (!depMap) return;
     const effects = depMap.get(key);
-    effects && effects.forEach((fn: any) => fn());
+    const effectsToRun = new Set(effects);
+    effectsToRun && effectsToRun.forEach((fn: any) => fn());
+    // effects && effects.forEach((fn: any) => fn()); // 无限遍历
 }
 
 // 代理实现响应性

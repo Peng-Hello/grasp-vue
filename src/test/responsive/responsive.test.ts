@@ -41,7 +41,7 @@ describe("响应性系统", () => {
         });
         expect(counter).toBe(2);
     });
-    it("分支切换错误测试", () => {
+    it("分支切换测试", () => {
         const rawData = {
             ok: true,
             text: "text",
