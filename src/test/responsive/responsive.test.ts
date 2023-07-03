@@ -11,18 +11,26 @@ const data: {
 // 全局变量
 let global = "This is global variable";
 
+// 函数运行次数计数器
+let counter = 0;
+
+// 响应数据
+const refData = ref(data);
+
+// 副作用函数注册
+effect(() => {
+    // 应该运行两次 注册一次，设置属性一次
+    console.log("effect run ...");
+    counter++;
+    global = refData.test;
+});
+
 describe("响应性系统", () => {
-    it("可以自行册副作用函数", async () => {
-        const refData = ref(data);
-
-        effect(() => {
-            console.log("effect run ...");
-
-            global = refData.test;
-        });
-
+    it("响应性测试", () => {
         refData.test = "Good!";
-
+        expect(global).toBe("Good!");
+    });
+    it("无关项测试", async () => {
         // 一个不存在的属性导致副作用函数重新执行了，这不是我们想要的。
         // 发生这个情况就是因为我们桶结构与问题，不能使得属性建立明确关系
         await new Promise((resolve, reject) => {
@@ -31,7 +39,6 @@ describe("响应性系统", () => {
                 resolve(refData);
             }, 1000);
         });
-
-        expect(global).toBe("Good!");
+        expect(counter).toBe(2);
     });
 });

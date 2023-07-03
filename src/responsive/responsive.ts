@@ -2,7 +2,7 @@
 // 简单的实现
 
 // 收集副作用的桶
-const bucket: Set<any> = new Set();
+const bucket: WeakMap<Object, any> = new WeakMap();
 
 // 需要注册的副作用函数
 let activateEffect: any;
@@ -22,17 +22,37 @@ export function ref(data: any) {
             },
             key
         ) {
-            // 把副作用函数注册
-            // 这种方式是写死的注册不是那么好。思考一下怎么才能让他不写死特定副作用函数？
-            // 答案是：用变量的形式代替写死的 effect ! 然后抽一个函数进行注册
-            if (activateEffect) {
-                bucket.add(activateEffect);
+            if (!activateEffect) return target[key];
+
+            let depMap = bucket.get(target);
+
+            // 没有找到对应的 Map
+            if (!depMap) {
+                // 新建一个 Map
+                bucket.set(target, (depMap = new Map()));
             }
+
+            let depSet = depMap.get(key);
+            // 没有对应的副作用函数的 Set
+            if (!depSet) {
+                // 新建一个副作用函数 Set
+                depMap.set(key, (depSet = new Set()));
+            }
+
+            depSet.add(activateEffect);
+
             return target[key];
         },
         set(target, key, value) {
             target[key] = value;
-            bucket.forEach((fn) => fn()); // 把副作用函数拿出来执行
+
+            const depMap = bucket.get(target);
+            if (!depMap) return true;
+
+            const effects = depMap.get(key);
+
+            effects && effects.forEach((fn: any) => fn());
+
             return true;
         },
     });
