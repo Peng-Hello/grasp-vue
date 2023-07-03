@@ -41,4 +41,27 @@ describe("响应性系统", () => {
         });
         expect(counter).toBe(2);
     });
+    it("分支切换错误测试", () => {
+        const rawData = {
+            ok: true,
+            text: "text",
+        };
+        const refData_0 = ref(rawData);
+
+        let fun_count = 0;
+
+        effect(() => {
+            console.log("switch running");
+            global = refData_0.ok ? refData_0.text : "no";
+            fun_count++;
+        });
+
+        refData_0.ok = false;
+
+        // 此时对应的 text 和 ok 字段都挂上了 effect 函数
+        // 很明显此时,在 ok = false 时 text 怎么改变都不应该改变
+        refData_0.text = "Change text";
+
+        expect(fun_count).toBe(2);
+    });
 });
